@@ -16,17 +16,29 @@
         /* Hide logout button by default on mobile */
     }
 
-/* Display logout button only on mobile and align it to the right */
-@media (max-width: 768px) {
-    .btn-auth-mobile {
-        display: block;
-        margin-left: auto; /* Align to the right */
-        padding: 0 15px;
-        color: #007BFF;
-        font-weight: bold;
-        text-decoration: none;
+    /* Display logout button only on mobile and align it to the right */
+    @media (max-width: 768px) {
+        .btn-auth-mobile {
+            display: block;
+            margin-left: auto;
+            /* Align to the right */
+            padding: 0 15px;
+            color: #007BFF;
+            font-weight: bold;
+            text-decoration: none;
+        }
+    }
+<<<<<<<<< Temporary merge branch 1
+}
+@media (min-width: 769px) {
+    .btn-show-menu-mobile,
+    .wrap-header-mobile {
+        display: none;
     }
 }
+
+=========
+>>>>>>>>> Temporary merge branch 2
 </style>
 
 <header class="header-v2">
