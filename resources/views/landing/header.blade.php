@@ -28,17 +28,13 @@
             text-decoration: none;
         }
     }
-<<<<<<<<< Temporary merge branch 1
-}
-@media (min-width: 769px) {
-    .btn-show-menu-mobile,
-    .wrap-header-mobile {
-        display: none;
+    @media (min-width: 769px) {
+        .btn-show-menu-mobile,
+        .wrap-header-mobile {
+            display: none;
+        }
     }
-}
 
-=========
->>>>>>>>> Temporary merge branch 2
 </style>
 
 <header class="header-v2">
@@ -60,7 +56,6 @@
                         <li>
                             <a href="{{ route('yourorder.index') }}">My Order</a>
                         </li>
-                        @if($member->status == 'active' )
                         <li>
                             @auth
                             @if($member)
@@ -69,7 +64,6 @@
                             @endif
                         @endauth
                         </li>
-                        @endif
                     </ul>
                 </div>
 
