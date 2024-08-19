@@ -16,18 +16,17 @@
         /* Hide logout button by default on mobile */
     }
 
-    /* Display logout button only on mobile and align it to the right */
-    @media (max-width: 768px) {
-        .btn-auth-mobile {
-            display: block;
-            margin-left: auto;
-            /* Align to the right */
-            padding: 0 15px;
-            color: #007BFF;
-            font-weight: bold;
-            text-decoration: none;
-        }
+/* Display logout button only on mobile and align it to the right */
+@media (max-width: 768px) {
+    .btn-auth-mobile {
+        display: block;
+        margin-left: auto; /* Align to the right */
+        padding: 0 15px;
+        color: #007BFF;
+        font-weight: bold;
+        text-decoration: none;
     }
+}
 </style>
 
 <header class="header-v2">
@@ -39,7 +38,9 @@
                 <!-- Menu desktop -->
                 <div class="menu-desktop">
                     <ul class="main-menu">
-
+                        <li>
+                            <img src="{{ asset('storage/' . $setting->app_logo) }}" alt="logo" width="50px" height="50px">
+                        </li>
                         <li>
                             <a href="{{ route('landing.index') }}">Home</a>
                         </li>
