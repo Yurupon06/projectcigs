@@ -102,7 +102,7 @@
         <table class="table">
             <tr>
                 <td colspan="2" class="align-center">
-                    <img width='100' src={{ asset('assets/images/2.png') }} alt={{ $appSetting->app_logo }}>
+                    <img width='100' src={{ isset($appSetting) && $appSetting->app_logo ? asset('storage/' . $appSetting->app_logo) : asset('assets/images/2.png') }} alt="Logo">
                 </td>
             </tr>
             <tr>
@@ -112,7 +112,7 @@
             </tr>
             <tr>
                 <td colspan="2" class="align-center">
-                    {{isset($appSetting->app_address) ? $appSetting->app_address : 'Jl. Pemuda No. 1' }}<br>
+                    {{isset($appSetting->app_address) ? $appSetting->app_address : 'Jl. Pemuda No. 1, Bandung, Jawa Barat, Indonesia' }}<br>
                 </td>
             </tr>
         </table>

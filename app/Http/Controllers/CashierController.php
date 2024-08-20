@@ -325,18 +325,12 @@ public function storeCustomer(Request $request)
     public function showCheckIn()
     {
         return view('cashier.checkinscanner');  
-
+    }
    
     public function membercheckin()
     {
         $memberckin = MemberCheckin::with('member.customer')->get();
         return view('cashier.membercheckin', compact('memberckin'));
-
-    }
-
-    public function showCheckIn()
-    {
-        return view('cashier.checkinscanner');  
 
     }
 
