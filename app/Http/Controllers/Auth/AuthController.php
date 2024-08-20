@@ -64,28 +64,45 @@ class AuthController extends Controller
         return view('auth.login');
     }
 
-
-
-
     public function login(Request $request)
-    {
-        $credentials = $request->only('email', 'password');
+{
+    // Validasi input
+    $request->validate([
+        'email' => 'required|email',
+        'password' => 'required',
+    ]);
 
-        if (Auth::attempt($credentials)) {
-            $user = Auth::user();
-            if ($user->role === 'admin') {
-                return redirect('dashboard');
-            }
-            if ($user->role === 'cashier') {
-                return redirect('cashier');
-            }
-            if ($user->role === 'customer') {
-                return redirect('/');
-            }
+    $credentials = $request->only('email', 'password');
+
+    // Coba autentikasi
+    if (Auth::attempt($credentials)) {
+        $user = Auth::user();
+
+        // Cek jika email sudah diverifikasi
+        if (!$user->hasVerifiedEmail()) {
+            Auth::logout(); // Logout jika email belum diverifikasi
+            return redirect()->back()
+                ->withErrors(['email' => 'Email not verified. Please check your email and click on the verification link.'])
+                ->withInput();
         }
 
-        return redirect()->back()->withErrors(['email' => 'Invalid credentials'])->withInput();
+        switch ($user->role) {
+            case 'admin':
+                return redirect()->route('dashboard.index');
+            case 'cashier':
+                return redirect()->route('cashier.index');
+            case 'customer':
+                return redirect()->route('landing.index');
+            default:
+                return redirect()->route('dashboard');
+        }
     }
+
+    return redirect()->back()
+        ->withErrors(['email' => 'Invalid credentials'])
+        ->withInput();
+}
+
 
 
     public function logout()

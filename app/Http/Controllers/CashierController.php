@@ -15,6 +15,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 use Carbon\Carbon;
+use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\Request;
 
 class CashierController extends Controller
@@ -148,6 +149,7 @@ class CashierController extends Controller
     {
         $order = Order::with('customer', 'product')->findOrFail($id);
         $payment = Payment::where('order_id', $id)->first();
+        $member = Member::where('customer_id', $order->customer_id)->first();
         $product = $order->product;
         $productcat = $product->productcat;
         $visit = $productcat->visit;
@@ -155,7 +157,7 @@ class CashierController extends Controller
 
         $appSetting = ApplicationSetting::first();
 
-        return view('cashier.struk_gym', compact('order', 'payment', 'appSetting', 'visit', 'user'));
+        return view('cashier.struk_gym', compact('order', 'payment', 'appSetting', 'visit', 'user', 'member'));
     }
 
 
@@ -201,6 +203,10 @@ public function storeCustomer(Request $request)
         'born' => $request->born,  // Sesuaikan dengan field lain yang ada
         'gender' => $request->gender, // Sesuaikan dengan field lain yang ada
     ]);
+
+    event(new Registered($user));
+
+    $user->sendEmailVerificationNotification();
     
     // Redirect ke route cashier.order dengan pesan sukses
     return redirect()->route('cashier.order')->with([
