@@ -134,5 +134,17 @@
             <i class="zmdi zmdi-chevron-up"></i>
         </span>
     </div>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+        @if (Session::has('success'))
+        {
+            Swal.fire({
+                title: 'Success!',
+                text: '{{ Session::get("success") }}',
+                icon: 'success',
+            })
+        }
+        @endif
+    </script>
 </body>
 

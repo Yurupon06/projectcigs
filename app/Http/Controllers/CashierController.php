@@ -305,7 +305,8 @@ class CashierController extends Controller
     {
         return view('cashier.checkinscanner');  
 
-
+    }
+    
     public function membercheckin()
     {
         $payment = Payment::with('order')->get();

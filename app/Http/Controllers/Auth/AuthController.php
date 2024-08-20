@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Password;
 use Illuminate\Auth\Events\PasswordReset;
+use Illuminate\Auth\Events\Registered;
 use Illuminate\Support\Facades\Validator;
 
 class AuthController extends Controller
@@ -34,7 +35,7 @@ class AuthController extends Controller
             return redirect()->back()->withErrors($validator)->withInput();
         }
 
-        User::create([
+        $user = User::create([
             'name' => $request->name,
             'email' => $request->email,
             'phone' => $request->phone,
@@ -42,7 +43,11 @@ class AuthController extends Controller
             'role' => 'customer'
         ]);
 
-        return redirect()->route('login');
+        event(new Registered($user));
+
+        $user->sendEmailVerificationNotification();
+
+        return redirect()->route('login')->with('success', 'Registration successful. Please Login and check your email to verify your account.');
     }
 
 

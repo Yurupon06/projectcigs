@@ -201,9 +201,9 @@
     </div>
 
     
-{{-- 
+
 	<script type="text/javascript">
 		window.print();
-	</script> --}}
+	</script>
 </body>
 </html>
