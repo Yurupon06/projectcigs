@@ -14,8 +14,6 @@ Route::get('struk', function () {
 
 
 Route::get('/', [\App\Http\Controllers\LandingController::class, 'index'])->name('landing.index');
-Route::get('cashier', [\App\Http\Controllers\CashierController::class, 'index'])->name('cashier.index');
-
 
 Route::middleware((['auth', 'customer']))->group(function (){
     Route::get('/profile', [\App\Http\Controllers\LandingController::class, 'profile'])->name('landing.profile');
@@ -94,11 +92,20 @@ Route::middleware('guest')->group(function (){
     Route::post('/login', [AuthController::class, 'login']);
     Route::get('/forgot', [AuthController::class, 'showForgotForm'])->name('show-forgot');
     Route::post('/forgot', [AuthController::class, 'forgot'])->name('forgot');
-    Route::get('/reset/{token}', function (string $token) { 
-        return view('auth.reset-password', ['token' => $token]);
-    })->name('password.reset');
-    Route::post('/reset', [AuthController::class, 'reset'])->name('reset');
+});
 
+Route::get('/reset/{token}', function (string $token) { 
+    return view('auth.reset-password', ['token' => $token]);
+})->name('password.reset');
+Route::post('/reset', [AuthController::class, 'reset'])->name('reset');
+
+Route::middleware('auth')->group(function (){
+    Route::get('/password-reset', [AuthController::class, 'showPasswordReset'])->name('show-reset');
+    Route::post('/password-reset', [AuthController::class, 'forgot'])->middleware('throttle:1,1')->name('forgot');
 });
 
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
+
+// Route::fallback(function () {
+//     abort(404);
+// });

@@ -117,7 +117,7 @@ class AuthController extends Controller
         );
     
         return $status === Password::RESET_LINK_SENT
-                    ? back()->with(['status' => __($status)])
+                    ? back()->with(['status' => __($status)])->with('success', 'We have e-mailed your password reset link!')
                     : back()->withErrors(['email' => __($status)]);
     }
 
@@ -142,8 +142,22 @@ class AuthController extends Controller
             }
         );
     
-        return $status === Password::PASSWORD_RESET
-                    ? redirect()->route('login')->with('status', __($status))->with('success', 'Password reset successfully')
-                    : back()->withErrors(['email' => [__($status)]]);
+        if ($status === Password::PASSWORD_RESET) {
+            if (auth()->check()) {
+                // User is already logged in, redirect to home
+                return redirect()->route('landing.index')->with('status', __($status))->with('success', 'Password reset successfully');
+            } else {
+                // User is not logged in, redirect to login
+                return redirect()->route('login')->with('status', __($status))->with('success', 'Password reset successfully. You can now log in with your new password.');
+            }
+        } else {
+            return back()->withErrors(['email' => [__($status)]]);
+        }
+    }
+
+    public function showPasswordReset()
+    {
+        $user = Auth::user();
+        return view('auth.auth-forgot', compact('user'));
     }
 }

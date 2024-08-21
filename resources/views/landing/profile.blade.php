@@ -217,9 +217,12 @@
                         <input type="password" id="password_confirmation" name="password_confirmation" class="form-control" required>
                     </div>
                 </div>
-                <div class="modal-footer">
+                <div class="modal-footer d-flex justify-content-between">
+                    <div>
+                        <button type="submit" class="btn btn-primary">Save changes</button>
+                        <a href="{{ route('show-reset') }}" class="ms-2">I forgot my password</a>
+                    </div>
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="submit" class="btn btn-primary">Save changes</button>
                 </div>
             </form>
         </div>
