@@ -53,7 +53,7 @@ class AuthController extends Controller
 
         $user->sendEmailVerificationNotification();
 
-        return redirect()->route('login')->with('success', 'Registration successful. Please Login and check your email to verify your account.');
+        return redirect()->route('login')->with('success', 'Registration successful. Please check your email to verify your account.');
     }
 
 
